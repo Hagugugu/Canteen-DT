@@ -1,0 +1,55 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const app = express();
+app.use(express.json());
+
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost/canteen', { useNewUrlParser: true });
+
+// Menu Schema
+const menuSchema = new mongoose.Schema({
+  name: String,
+  price: Number,
+  available: Boolean
+});
+const Menu = mongoose.model('Menu', menuSchema);
+
+// Get all menu items
+app.get('/api/menu', async (req, res) => {
+  const items = await Menu.find();
+  res.json(items);
+});
+
+// Add new item (admin only)
+app.post('/api/menu', async (req, res) => {
+  const item = new Menu(req.body);
+  await item.save();
+  res.json(item);
+});
+
+app.listen(5000, () => console.log('Server running on port 5000'));
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+function Menu() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    axios.get('/api/menu').then(res => setItems(res.data));
+  }, []);
+
+  return (
+    <div>
+      <h1>Canteen Menu</h1>
+      {items.map(item => (
+        <div key={item._id}>
+          <h3>{item.name}</h3>
+          <p>Price: ${item.price}</p>
+          <p>Available: {item.available ? 'Yes' : 'No'}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default Menu;
