@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canteen Management System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Canteen Management System</h1>
+    <p>Prototype for Representation</p>
+  </header>
+
+  <main>
+    <h2>Menu</h2>
+    <div id="menu" class="menu-container"></div>
+
+    <h2>Add Item (Admin)</h2>
+    <form id="addForm">
+      <input type="text" id="name" placeholder="Item name" required>
+      <input type="number" id="price" placeholder="Price" required>
+      <select id="available">
+        <option value="true">Available</option>
+        <option value="false">Not Available</option>
+      </select>
+      <button type="submit">Add Item</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>Backend: Node.js + Express + MongoDB (Mocked for demo)</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
